@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevBlog - Sandip's Personal Blog</title>
+  <link rel="shortcut icon" href="./assets/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body class="dark-theme">
+
+  <!--
+    - #HEADER
+  -->
+
+  <header>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+    <script src="./assets/js/ws.js"></script>
+
+    <div class="container">
+
+      <nav class="navbar">
+
+        <a href="#">
+          <img src="./assets/images/ssdd.png" alt="Devblog's logo" width="150" height="150" class="logo-dark">
+          <img src="./assets/images/ssdd.png" alt="Devblog's logo" width="150" height="150" class="logo-light">
+        </a>
+
+        <div class="btn-group">
+
+          <button class="theme-btn theme-btn-mobile dark">
+            <ion-icon name="moon" class="moon"></ion-icon>
+            <ion-icon name="sunny" class="sun"></ion-icon>
+          </button>
+
+          <button class="nav-menu-btn">
+            <ion-icon name="menu-outline"></ion-icon>
+          </button>
+
+        </div>
+
+        <div class="flex-wrapper">
+
+          <ul class="desktop-nav">
+
+           <!-- <li>
+              <a href="#" class="nav-link">Home</a>
+            </li>-->
+
+            <li>
+              <a href="#" class="nav-link">About</a>
+            </li>
+
+            <li>
+              <a href="#lcontact" class="nav-link">Contact</a>
+            </li>
+
+          </ul>
+
+          <button class="theme-btn theme-btn-desktop dark">
+            <ion-icon name="moon" class="moon"></ion-icon>
+            <ion-icon name="sunny" class="sun"></ion-icon>
+          </button>
+
+        </div>
+
+        <div class="mobile-nav">
+
+          <button class="nav-close-btn">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+
+          <div class="wrapper">
+
+            <p class="h3 nav-title">Main Menu</p>
+
+            <ul>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Home</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">About Me</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">Contact</a>
+              </li>
+            </ul>
+
+          </div>
+
+          <div>
+
+            <p class="h3 nav-title">Topics</p>
+
+            <ul>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Database</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">E2E Encryption</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">Performance</a>
+              </li>
+            </ul>
+
+          </div>
+
+        </div>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+  <main>
+    <div class="hero">
+
+      <div class="container">
+
+        <div class="left">
+
+          <h1 class="h1">
+            Hi, I'm <b>Sandip</b>.
+            <br>Backend Developer
+          </h1>
+
+          <p class="h3">
+            Specialized in watching <abbr title="Accessibility">Shin chan</abbr>
+            and getting Rusty
+          </p>
+
+          <div class="btn-group">
+            <a href="#lcontact" class="btn btn-primary">Contact Us</a>
+            <a href="resume" class="btn btn-secondary">Resume</a>
+          </div>
+
+        </div>
+
+        <div class="right">
+
+          <div class="pattern-bg"></div>
+          <div class="img-box">
+            <img src="./assets/images/hero.png" alt="Me" class="hero-img">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="main">
+
+      <div class="container">
+
+        <!--
+          - BLOG SECTION
+        -->
+
+        <div class="blog">
+
+          <h2 class="h2">Latest Blog Post</h2>
+
+          <center id="loader">
+            <div class="loader"></div>
+          </center>
+
+          <ul id="rec_blogs" class="blog-card-group">
+          </ul>
+
+          <button id="loadmore" class="btn load-more">Load More</button>
+
+        </div>
+
+        <div class="aside">
+
+          <div class="topics">
+
+            <h2 class="h2">Topics</h2>
+
+            <a href="#" class="topic-btn">
+              <div class="icon-box">
+                <ion-icon name="server-outline"></ion-icon>
+              </div>
+
+              <p>Database</p>
+            </a>
+
+            <a href="#" class="topic-btn">
+              <div class="icon-box">
+                <ion-icon name="phone-portrait-outline"></ion-icon>
+              </div>
+
+              <p>E2E Encryption</p>
+            </a>
+
+            <a href="#" class="topic-btn">
+              <div class="icon-box">
+                <ion-icon name="rocket-outline"></ion-icon>
+              </div>
+
+              <p>Performance</p>
+            </a>
+
+          </div>
+
+          <div class="tags">
+
+            <h2 class="h2">Tags</h2>
+
+            <div class="wrapper">
+
+              <button class="hashtag">#let's get rusty</button>
+              <button class="hashtag">#e2ee</button>
+              <button class="hashtag">#oss</button>
+              <button class="hashtag">#optimize</button>
+              <button class="hashtag">#performance</button>
+
+            </div>
+
+          </div>
+
+          <div id="lcontact" class="contact">
+
+            <h2 class="h2">Let's Talk</h2>
+
+            <div class="wrapper">
+
+              <p>
+                Want to get in touch? Just drop message on my any of my social media accounts mentioned below
+              </p>
+
+              <ul class="social-link">
+
+                <li>
+                  <a href="mailto:sandip@ssdd.dev">
+                    <img src="https://img.shields.io/badge/-sandip@ssdd.dev-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:sandip@ssdd.dev" alt="Email">
+                  </a>
+                </li>
+
+                <li>
+                  <a target="_blank" href="https://www.linkedin.com/in/ssdddev">
+                    <img src="https://img.shields.io/badge/-Sandipsinh%20Rathod-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/ssdddev/" alt="Linkedin">
+                  </a>
+                </li>
+
+                <li>
+                  <a href="https://ssdddev.t.me">
+                    <img src="https://img.shields.io/badge/-@ssdddev-blue?style=flat-square&logo=Telegram&logoColor=white&link=https://t.me/ssdddev/)](https://ssdddev.t.me/" alt="Telegram">
+                  </a>
+                </li>
+
+              </ul>
+
+            </div>
+
+          </div>
+
+          <div class="devstuff">
+
+            <h2 class="h2">Dev stuff</h2>
+
+            <div class="wrapper">
+
+              <p>
+               Here are the places that I love to be as a developer!
+              </p>
+
+              <ul class="social-link">
+
+                <li>
+                  <a href="https://github.com/ssddOnTop" target="_blank">
+                    <img src="https://img.shields.io/badge/-ssddOnTop-171515?style=flat-square&logo=Github&logoColor=white&link=https://github.com/ssddOnTop" alt="Github">
+                  </a>
+                </li>
+
+                <li>
+                  <a target="_blank" href="https://www.linkedin.com/in/ssdddev">
+                    <img src="https://img.shields.io/badge/-Sandipsinh%20Rathod-f48024?style=flat-square&logo=Stackoverflow&logoColor=white&link=https://www.linkedin.com/in/ssdddev/" alt="Linkedin">
+                  </a>
+                </li>
+
+              </ul>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer>
+
+    <div class="container">
+
+      <div class="wrapper">
+
+        <a href="#" class="footer-logo">
+          <img src="./assets/images/ssdd.png" alt="DevBlog's Logo" width="150" height="150" class="logo-dark">
+          <img src="./assets/images/ssdd.png" alt="DevBlog's Logo" width="150" height="150" class="logo-light">
+        </a>
+
+        <p class="footer-text">
+          Learn about Web accessibility, Web performance, and Database management.
+        </p>
+
+      </div>
+
+      <div class="wrapper">
+
+        <p class="footer-title">Quick Links</p>
+
+        <ul>
+          <li>
+            <a href="#" class="footer-link">About Us</a>
+          </li>
+
+          <li>
+            <a href="#lcontact" class="footer-link">Contact Us</a>
+          </li>
+
+        </ul>
+
+      </div>
+
+      <div class="wrapper">
+
+        <p class="footer-title">Legal Stuff</p>
+
+        <ul>
+
+          <li>
+            <a href="policy" class="footer-link">Privacy Notice</a>
+          </li>
+
+          <li>
+            <a href="cookies" class="footer-link">Cookie Policy</a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+    <p class="copyright">
+      &copy; Copyright 2022 <a href="https://www.ssdd.dev/">SSDD</a>
+    </p>
+
+  </footer>
+
+
+
+
+
+  <!--
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+<script>
+  const ul = document.getElementById("rec_blogs");
+
+  function createPost(blogArr){
+    //heading, image, alt, tag, shortDesc, linkx
+    let json = JSON.parse(blogArr);
+
+    for (let i = 0; i < json.length; i++) {
+      let j = json[i];
+      let li = document.createElement("li");
+      li.setAttribute("class", "blog-card");
+      let d1 = document.createElement("div");
+      d1.setAttribute("class", "blog-card-banner");
+      let i1 = document.createElement("img");
+      i1.src = j.image;
+      i1.alt = j.alt;
+      i1.width = 250;
+      i1.setAttribute("class", "blog-banner-img");
+
+      d1.appendChild(i1);
+      li.appendChild(d1);
+
+      let d2 = document.createElement("div");
+      d2.setAttribute("class", "blog-content-wrapper");
+
+      let tagBtn = document.createElement("button");
+      tagBtn.setAttribute("class", "blog-topic text-tiny");
+      tagBtn.textContent = j.tag;
+
+      let h3 = document.createElement('h3');
+      let a = document.createElement("a");
+
+      a.href = j.linkx;
+      a.target = "_blank";
+      a.setAttribute("class", "h3");
+      a.textContent = j.heading;
+
+      h3.appendChild(a);
+
+      let p = document.createElement("p");
+      p.setAttribute("class","blog-text");
+      p.textContent = j.shortDesc;
+
+      d2.appendChild(tagBtn);
+      d2.appendChild(h3);
+      d2.appendChild(p);
+
+      li.appendChild(d2);
+
+      ul.appendChild(li);
+
+      if(i === json.length-1){
+        loaded();
+      }
+
+    }
+
+    function loaded(){
+      document.getElementById('loader').style.display = 'none';
+    }
+
+  }
+
+</script>
+
+</body>
+
+</html>
