@@ -3,11 +3,11 @@
     font-family: et-book;
     font-style: normal;
     font-weight: 400;
-    src: url(../assets/fonts/et-book-roman-line-figures/et-book-roman-line-figures.eot?0e28ac62c0a5f0a6ebd4f01449ef7bcf);
-    src: url(../assets/fonts/et-book-roman-line-figures/et-book-roman-line-figures.eot?0e28ac62c0a5f0a6ebd4f01449ef7bcf?#iefix) format("embedded-opentype"),
-    url(../assets/fonts/et-book-roman-line-figures/et-book-roman-line-figures.woff?4ac21e22fa566a3a9d03b0eb8ecc7aa2) format("woff"),
-    url(../assets/fonts/et-book-roman-line-figures/et-book-roman-line-figures.ttf?6b94337c017b950617c926f79ce8940b) format("truetype"),
-    url(../assets/images/et-book-roman-line-figures/et-book-roman-line-figures.svg?3e5ea53e09d37ebaeaa9d31e7e37a3e7#etbookromanosf) format("svg")
+    src: url(../fonts/et-book-roman-line-figures/et-book-roman-line-figures.eot?0e28ac62c0a5f0a6ebd4f01449ef7bcf);
+    src: url(../fonts/et-book-roman-line-figures/et-book-roman-line-figures.eot?0e28ac62c0a5f0a6ebd4f01449ef7bcf?#iefix) format("embedded-opentype"),
+    url(../fonts/et-book-roman-line-figures/et-book-roman-line-figures.woff?4ac21e22fa566a3a9d03b0eb8ecc7aa2) format("woff"),
+    url(../fonts/et-book-roman-line-figures/et-book-roman-line-figures.ttf?6b94337c017b950617c926f79ce8940b) format("truetype"),
+    url(../images/et-book-roman-line-figures/et-book-roman-line-figures.svg?3e5ea53e09d37ebaeaa9d31e7e37a3e7#etbookromanosf) format("svg")
 }
 
 @font-face {
@@ -15,11 +15,11 @@
     font-family: et-book;
     font-style: italic;
     font-weight: 400;
-    src: url(../assets/fonts/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.eot?4abce91518b8e452e9f8c4e724f78c6e);
-    src: url(../assets/fonts/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.eot?4abce91518b8e452e9f8c4e724f78c6e?#iefix) format("embedded-opentype"),
-    url(../assets/fonts/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff?265915ee0e932b50d56717fc1947d591) format("woff"),
-    url(../assets/fonts/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.ttf?8823eac088ad9be73a865edbc2e0a167) format("truetype"),
-    url(../assets/images/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.svg?5e65949701ee46638cfe395780335e2f#etbookromanosf) format("svg")
+    src: url(../fonts/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.eot?4abce91518b8e452e9f8c4e724f78c6e);
+    src: url(../fonts/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.eot?4abce91518b8e452e9f8c4e724f78c6e?#iefix) format("embedded-opentype"),
+    url(../fonts/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff?265915ee0e932b50d56717fc1947d591) format("woff"),
+    url(../fonts/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.ttf?8823eac088ad9be73a865edbc2e0a167) format("truetype"),
+    url(../images/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.svg?5e65949701ee46638cfe395780335e2f#etbookromanosf) format("svg")
 }
 
 @font-face {
@@ -27,11 +27,11 @@
     font-family: et-book;
     font-style: normal;
     font-weight: 700;
-    src: url(../assets/fonts/et-book-bold-line-figures/et-book-bold-line-figures.eot?5b5549528db5c06a8acb6f1eb982719e);
-    src: url(../assets/fonts/et-book-bold-line-figures/et-book-bold-line-figures.eot?5b5549528db5c06a8acb6f1eb982719e?#iefix) format("embedded-opentype"),
-    url(../assets/fonts/et-book-bold-line-figures/et-book-bold-line-figures.woff?6cbac1488b6c9a647065eecf44acce4a) format("woff"),
-    url(../assets/fonts/et-book-bold-line-figures/et-book-bold-line-figures.ttf?f61e31f5501bc2c2d0e9bb36b0306a24) format("truetype"),
-    url(../assets/images/et-book-bold-line-figures/et-book-bold-line-figures.svg?0a65b0565df651d2a133132889eb00f7#etbookromanosf) format("svg")
+    src: url(../fonts/et-book-bold-line-figures/et-book-bold-line-figures.eot?5b5549528db5c06a8acb6f1eb982719e);
+    src: url(../fonts/et-book-bold-line-figures/et-book-bold-line-figures.eot?5b5549528db5c06a8acb6f1eb982719e?#iefix) format("embedded-opentype"),
+    url(../fonts/et-book-bold-line-figures/et-book-bold-line-figures.woff?6cbac1488b6c9a647065eecf44acce4a) format("woff"),
+    url(../fonts/et-book-bold-line-figures/et-book-bold-line-figures.ttf?f61e31f5501bc2c2d0e9bb36b0306a24) format("truetype"),
+    url(../images/et-book-bold-line-figures/et-book-bold-line-figures.svg?0a65b0565df651d2a133132889eb00f7#etbookromanosf) format("svg")
 }
 
 @font-face {
@@ -39,8 +39,11 @@
     font-family: et-book-roman-old-style;
     font-style: normal;
     font-weight: 400;
-    src: url(../assets/fonts/et-book-roman-old-style-figures/et-book-roman-old-style-figures.eot?44171ebd10a032726f3656f620a9226f);
-    src: url(../assets/fonts/et-book-roman-old-style-figures/et-book-roman-old-style-figures.eot?44171ebd10a032726f3656f620a9226f?#iefix) format("embedded-opentype"), url(../assets/fonts/et-book-roman-old-style-figures/et-book-roman-old-style-figures.woff?e1efe4c3b39280c51c758048326cf92c) format("woff"), url(../assets/fonts/et-book-roman-old-style-figures/et-book-roman-old-style-figures.ttf?bc7b7dcf802cd95e416939b4671c1be8) format("truetype"), url(../assets/images/et-book-roman-old-style-figures/et-book-roman-old-style-figures.svg?0c03325283d2860db6adf48292a71fec#etbookromanosf) format("svg")
+    src: url(../fonts/et-book-roman-old-style-figures/et-book-roman-old-style-figures.eot?44171ebd10a032726f3656f620a9226f);
+    src: url(../fonts/et-book-roman-old-style-figures/et-book-roman-old-style-figures.eot?44171ebd10a032726f3656f620a9226f?#iefix) format("embedded-opentype"),
+    url(../fonts/et-book-roman-old-style-figures/et-book-roman-old-style-figures.woff?e1efe4c3b39280c51c758048326cf92c) format("woff"),
+    url(../fonts/et-book-roman-old-style-figures/et-book-roman-old-style-figures.ttf?bc7b7dcf802cd95e416939b4671c1be8) format("truetype"),
+    url(../images/et-book-roman-old-style-figures/et-book-roman-old-style-figures.svg?0c03325283d2860db6adf48292a71fec#etbookromanosf) format("svg")
 }
 
 html {
