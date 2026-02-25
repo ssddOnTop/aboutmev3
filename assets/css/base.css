@@ -135,8 +135,8 @@ header {
   background-color: var(--bg-card);
   border-radius: 0.15em;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  flex-direction: column;
+  gap: 1em;
 }
 
 .header-text {
@@ -146,7 +146,7 @@ header {
 
 .blog-title {
   margin: -0.225em 0;
-  font-size: 3em;
+  font-size: 2.5em;
   font-weight: bold;
   color: var(--text-primary);
   text-decoration: none;
@@ -189,6 +189,7 @@ footer a:hover {
   gap: 12px;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .social-links a {
