@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Building CortexMap: A distributed system for AI-powered neuroscience literature synthesis using Rust, PostgreSQL, and RAG">
+  <title>Building CortexMap: AI-Powered Brain Atlas from 10,000 Research Papers</title>
+  <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
+  <link href="../assets/css/base.css" rel="stylesheet">
+  
+  <style>
+    /* Page-specific styles: wider content, white background */
+    #center {
+      flex: 0 1 1200px;
+      background-color: white;
+    }
+
+    header {
+      margin-bottom: 2em;
+      padding-bottom: 1em;
+      border-bottom: 2px solid var(--border);
+      box-shadow: none;
+      background: transparent;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.3em;
+      line-height: 1.2;
+    }
+
+    .tags {
+      margin-top: 1em;
+    }
+
+    .tag {
+      padding: 0.3em 0.7em;
+    }
+
+    h2 {
+      font-size: 1.8em;
+      margin: 1.8em 0 0.8em 0;
+    }
+
+    h3 {
+      font-size: 1.4em;
+      margin: 1.4em 0 0.6em 0;
+    }
+
+    h4 {
+      font-size: 1.1em;
+      margin: 1em 0 0.5em 0;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 1em;
+      color: var(--text-secondary);
+      font-size: 1.05em;
+      line-height: 1.75;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.15em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+      font-family: 'Courier New', monospace;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    ul, ol {
+      margin: 0.5em 0 1.5em 2em;
+      color: var(--text-secondary);
+    }
+
+    li {
+      margin-bottom: 0.6em;
+      line-height: 1.75;
+    }
+
+    strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    em {
+      color: var(--text-primary);
+      font-style: italic;
+    }
+
+    .highlight {
+      background: var(--bg-card);
+      border-left: 4px solid var(--accent);
+      padding: 1.2em;
+      margin: 1.5em 0;
+      border-radius: 3px;
+    }
+
+    .highlight p {
+      margin-bottom: 0.5em;
+    }
+
+    .highlight p:last-child {
+      margin-bottom: 0;
+    }
+
+    .architecture-diagram {
+      background: var(--code-bg);
+      padding: 1.5em;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85em;
+      margin: 1.5em 0;
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .intro {
+      font-size: 1.2em;
+      color: var(--text-primary);
+      margin-bottom: 1.5em;
+      line-height: 1.8;
+      font-weight: 400;
+    }
+
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding-left: 1.5em;
+      margin: 1.5em 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1em;
+      margin: 1.5em 0;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      padding: 1.2em;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+    }
+
+    .stat-number {
+      font-size: 2em;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 0.2em;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.9em;
+    }
+
+    footer {
+      margin-top: 60px;
+      border-top: 1px solid var(--border);
+      box-shadow: none;
+      background: transparent;
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 2em; }
+      h2 { font-size: 1.5em; }
+      h3 { font-size: 1.2em; }
+      
+      .architecture-diagram {
+        font-size: 0.7em;
+        padding: 1em;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="left"></div>
+  <div id="center">
+    <a href="../" class="back-link">&larr; Back to Home</a>
+
+    <header>
+      <h1>Building CortexMap: AI-Powered Brain Atlas from 10,000 Research Papers</h1>
+      <div class="meta">Engineering Deep Dive &middot; Penn State &middot; February 2026</div>
+      <div class="tags">
+        <span class="tag">Rust</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">RAG</span>
+        <span class="tag">LLMs</span>
+        <span class="tag">Vector Search</span>
+        <span class="tag">Distributed Systems</span>
+      </div>
+    </header>
+
+    <p class="intro">
+      CortexMap processes thousands of neuroscience research papers to automatically generate comprehensive profiles for brain regions. For each region in a predefined list (hippocampus, amygdala, prefrontal cortex, etc.), the system synthesizes its functions, associated diseases, and affected body parts from the literature—complete with citations. It's a batch generation system using distributed task queues, vector databases, and retrieval-augmented generation to turn literature into structured knowledge.
+    </p>
+
+    <section>
+      <h2>The Problem: Information Overload in Neuroscience</h2>
+      
+      <p>
+        Neuroscience researchers face an impossible task: staying current with the literature. PubMed Central indexes over 7 million biomedical papers, with thousands added weekly. For any given brain region—say, the hippocampus—there might be 15,000 relevant papers spanning decades of research.
+      </p>
+
+      <p>
+        No researcher can read 15,000 papers. Creating comprehensive profiles for each brain region—documenting functions, disease associations, and systemic effects—requires synthesizing findings across hundreds of papers through manual reading and integration. This process takes months and is outdated by completion.
+      </p>
+
+      <p>
+        We built CortexMap to automate this synthesis. Given a list of brain regions, the system ingests thousands of relevant papers, extracts findings using vector search and large language models, and generates structured profiles (summary, diseases, affected body parts) with citation tracking. Every claim links back to specific passages in source papers.
+      </p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">1,328</div>
+          <div class="stat-label">Brain regions mapped</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">50K+</div>
+          <div class="stat-label">Relationships extracted</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">&lt;5s</div>
+          <div class="stat-label">Summary generation</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">97%+</div>
+          <div class="stat-label">Fetch success rate</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>System Architecture: Three Services, One Goal</h2>
+
+      <p>
+        CortexMap is built as three independent Rust microservices communicating over HTTP. This separation emerged from the distinct computational profiles of each task: I/O-bound paper fetching, CPU/GPU-intensive NLP processing, and lightweight orchestration.
+      </p>
+
+      <div class="architecture-diagram">┌──────────────────────────────────────────────────────┐
+│                   Orchestrator                       │
+│  • Coordinates pipeline execution                    │
+│  • Manages batches and worker allocation             │
+│  • Caches results in Redis                           │
+│  • Background completion watcher                     │
+└────────┬────────────────────────────────┬────────────┘
+         │                                │
+         ▼                                ▼
+┌──────────────────────┐      ┌──────────────────────┐
+│   Fetcher Service    │      │  BrainAtlas Service  │
+│  • PubMed API client │      │  • LLM integration   │
+│  • Distributed queue │      │  • Vector embeddings │
+│  • Worker pool       │      │  • RAG pipeline      │
+│  • S3 uploads        │      │  • Citation tracking │
+└──────────┬───────────┘      └──────────┬───────────┘
+           │                             │
+           ▼                             ▼
+    ┌────────────────────────────────────────┐
+    │        PostgreSQL + pgvector           │
+    │  • Task queue (FOR UPDATE SKIP LOCKED) │
+    │  • Vector embeddings (cosine search)   │
+    │  • Source attribution metadata         │
+    └────────────────────────────────────────┘
+                     ▲
+                     │
+              ┌──────┴──────┐
+              │   S3/MinIO  │
+              │  Paper PDFs │
+              │  Full-text  │
+              └─────────────┘</div>
+
+      <h3>Service Responsibilities</h3>
+
+      <p>
+        <strong>Fetcher Service:</strong> Handles all interaction with PubMed Central. When given a search query like "hippocampus AND memory formation", it queries the NCBI E-utilities API, retrieves up to 20 paper IDs, and queues download tasks. Workers asynchronously fetch full-text XML, upload to S3, and mark tasks complete. The architecture supports dozens of concurrent workers claiming tasks from PostgreSQL without conflicts.
+      </p>
+
+      <p>
+        <strong>BrainAtlas Service:</strong> The NLP workhorse. It downloads papers from S3, chunks them into 1000-character segments with 200-character overlap, generates vector embeddings via OpenRouter's API, and stores them in PostgreSQL with pgvector. Then it runs a retrieval-augmented generation (RAG) loop: the LLM searches for relevant chunks, reads them, and synthesizes a final summary. Every generated claim tracks back to specific character ranges in source papers.
+      </p>
+
+      <p>
+        <strong>Orchestrator Service:</strong> The coordinator. It generates diverse PubMed queries using an LLM (e.g., "hippocampus anatomy", "hippocampal lesions memory deficits"), submits them to the Fetcher, tracks progress in batches, and triggers BrainAtlas processing when papers arrive. A background watcher polls every 30 seconds for completed batches, ensuring the pipeline never stalls. Redis caches responses to reduce database load.
+      </p>
+
+      <div class="highlight">
+        <p><strong>Why separate services?</strong></p>
+        <p>
+          Fetching papers is I/O-bound—workers spend most of their time waiting on network calls. LLM processing is API-rate-limited and memory-intensive. Orchestration is lightweight HTTP routing. Running them in one monolith would waste resources. Splitting lets us scale the Fetcher horizontally with more workers while running a single BrainAtlas instance, optimizing for each workload's characteristics.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>The Distributed Paper Fetcher</h2>
+
+      <p>
+        Academic papers don't download themselves, and PubMed Central's API has rate limits. Our fetcher implements a production-grade distributed task queue using PostgreSQL, with component-level retry tracking and graceful failure handling.
+      </p>
+
+      <h3>The Task Queue</h3>
+
+      <p>
+        When the Orchestrator submits a query, the Fetcher creates one database row per paper in the <code>fetch_tasks</code> table. Each task starts with <code>status='pending'</code> and awaits a worker. Workers claim tasks using PostgreSQL's <code>FOR UPDATE SKIP LOCKED</code> feature:
+      </p>
+
+      <blockquote>
+        "When a worker executes SELECT ... FOR UPDATE SKIP LOCKED, the database locks the row atomically. If another worker already holds the lock, PostgreSQL <em>skips</em> that row instead of blocking. The second worker immediately gets the next available task. No distributed locks, no Redis coordination, no race conditions—the database handles concurrency natively."
+      </blockquote>
+
+      <p>
+        This pattern is beautifully simple. We tested it with 10 concurrent workers hammering a queue of 500 tasks—zero duplicate claims, zero deadlocks, linear scaling.
+      </p>
+
+      <h3>Component-Level Retries</h3>
+
+      <p>
+        Papers have three components: metadata (title, authors, abstract), full-text XML, and PDFs. Each component can fail independently. Instead of retrying the entire paper when a PDF download times out, we track each component's state separately.
+      </p>
+
+      <p>
+        Here's a concrete example. A worker picks up a task for paper PMC12345:
+      </p>
+
+      <ol>
+        <li><strong>Metadata fetch:</strong> Success. ESummary API returns JSON. Uploaded to S3. Component marked <code>completed</code>.</li>
+        <li><strong>Full-text fetch:</strong> Success. Downloaded 47KB XML file. Uploaded to S3. Component marked <code>completed</code>.</li>
+        <li><strong>PDF fetch:</strong> Network timeout after 30 seconds. Attempt counter increments (1/5). Component reset to <code>pending</code>.</li>
+      </ol>
+
+      <p>
+        The worker releases the task back to the queue. Five minutes later, another worker (or the same one) claims it again. It sees metadata and full-text are already done, so it skips directly to the PDF. This time, the download succeeds. Task complete.
+      </p>
+
+      <p>
+        <strong>Impact:</strong> On a batch of 500 papers with a 15% PDF failure rate on first attempt, this approach saved approximately 1,350 redundant API calls and 23 hours of wasted download time compared to task-level retries.
+      </p>
+
+      <h3>Handling Worker Crashes</h3>
+
+      <p>
+        Workers can crash, servers can restart, networks can partition. If a worker dies mid-processing, that task would be locked forever. We prevent this with heartbeat-based leases.
+      </p>
+
+      <p>
+        When a worker claims a task, it sets <code>heartbeat_at</code> to the current timestamp and saves its <code>worker_id</code>. A recovery job scans for tasks where <code>heartbeat_at</code> is older than 60 seconds. Those tasks get reset: status back to <code>pending</code>, worker fields cleared. Another worker can claim them.
+      </p>
+
+      <p>
+        This is lease-based processing. If the worker is still alive but just slow, it'll try to mark the task complete and get a database conflict error—the row was already reassigned. The worker logs the error and moves on. No duplicate work, no stuck tasks.
+      </p>
+
+      <div class="highlight">
+        <p><strong>Real-world resilience:</strong></p>
+        <p>
+          During development, we had a worker that would occasionally hang on PDF downloads (PubMed Central sometimes returns malformed content-length headers). The heartbeat system automatically recovered those tasks within 60 seconds. We added better error handling later, but the heartbeat mechanism prevented hours of debugging stalled pipelines.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Retrieval-Augmented Generation with Vector Search</h2>
+
+      <p>
+        Fetching papers is just the beginning. The real challenge is synthesis: how do you turn 50 papers about the hippocampus into a coherent summary that accurately represents the literature?
+      </p>
+
+      <p>
+        This is where retrieval-augmented generation (RAG) shines. Instead of asking an LLM to hallucinate facts about the hippocampus, we give it access to a search engine over the actual paper content. The LLM retrieves relevant passages, reads them, and cites them in its answer.
+      </p>
+
+      <h3>Step 1: Text Chunking and Embedding</h3>
+
+      <p>
+        Papers are long—a typical neuroscience article is 5,000-8,000 words. LLMs have context windows (GPT-4o supports 128K tokens, but feeding entire papers wastes tokens and increases latency). We chunk papers into overlapping segments:
+      </p>
+
+      <ul>
+        <li><strong>Chunk size:</strong> 1,000 characters (~200 words)</li>
+        <li><strong>Overlap:</strong> 200 characters between chunks</li>
+        <li><strong>Metadata:</strong> Each chunk stores <code>source_s3_key</code>, <code>source_pmc_id</code>, <code>char_start</code>, <code>char_end</code></li>
+      </ul>
+
+      <p>
+        Each chunk gets converted into a vector embedding—a 1,536-dimensional array of floats that captures semantic meaning. We use OpenRouter's embedding API (typically OpenAI's <code>text-embedding-3-small</code>). Chunks with similar meanings have similar vectors in embedding space.
+      </p>
+
+      <p>
+        These embeddings go into PostgreSQL with the pgvector extension. Pgvector adds a <code>vector</code> data type and indexes for fast similarity search using HNSW (Hierarchical Navigable Small World graphs). We can query "find the 10 chunks most similar to 'hippocampal role in spatial memory'" in milliseconds.
+      </p>
+
+      <h3>Step 2: The RAG Loop</h3>
+
+      <p>
+        Now comes the magic. We prompt the LLM with:
+      </p>
+
+      <blockquote>
+        "You are a neuroscience expert writing a comprehensive summary of the hippocampus. You have access to a search tool that retrieves relevant passages from research papers. Use this tool to gather evidence before writing your summary. Cite specific passages using [chunk:id] markers."
+      </blockquote>
+
+      <p>
+        The LLM doesn't have knowledge of hippocampus research—it has a <em>tool</em>: <code>search_embeddings(query: str, top_k: int)</code>. Here's how it uses it:
+      </p>
+
+      <ol>
+        <li><strong>Round 1:</strong> LLM calls <code>search_embeddings("hippocampus anatomy structure", 10)</code>. We convert "hippocampus anatomy structure" to a vector, search pgvector, return 10 closest chunks.</li>
+        <li><strong>Round 2:</strong> LLM reads those chunks, then calls <code>search_embeddings("hippocampal formation memory consolidation", 10)</code>. Gets 10 more chunks.</li>
+        <li><strong>Round 3:</strong> LLM calls <code>search_embeddings("CA1 CA3 subregions electrophysiology", 10)</code>.</li>
+        <li><strong>Round 4:</strong> LLM decides it has enough information. Returns final summary with citations like "The hippocampus plays a critical role in memory consolidation [chunk:a3f7]..."</li>
+      </ol>
+
+      <p>
+        We limit the loop to 5 rounds to prevent runaway costs. In practice, most summaries complete in 3-4 rounds. The LLM is remarkably good at asking targeted questions—it starts broad ("hippocampus function") and drills down ("dentate gyrus neurogenesis").
+      </p>
+
+      <h3>Step 3: Citation Resolution</h3>
+
+      <p>
+        When the frontend renders a summary, it sees markers like <code>[chunk:a3f7]</code>. It queries the backend: "Give me metadata for chunk a3f7." The backend joins the <code>brain_region_embeddings</code> table with <code>papers</code> and returns:
+      </p>
+
+      <div class="architecture-diagram">{
+  "chunk_id": "a3f7",
+  "source_pmc_id": "PMC3847291",
+  "source_query": "hippocampus AND spatial memory",
+  "char_start": 12847,
+  "char_end": 13847,
+  "text": "...studies have shown that hippocampal neurons..."
+}</div>
+
+      <p>
+        The frontend renders this as a clickable citation bubble. Users can hover for a preview or click to open the paper on PubMed Central, jumping directly to the cited section.
+      </p>
+
+      <div class="highlight">
+        <p><strong>Why this matters:</strong></p>
+        <p>
+          Without citations, AI-generated summaries are unverifiable. With our approach, every claim is traceable. If a user reads "The hippocampus contains place cells that encode spatial location" and wonders about the evidence, they can click the citation and land on the 1971 O'Keefe & Dostrovsky paper that discovered place cells. Trust through transparency.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Orchestrating Async Workflows</h2>
+
+      <p>
+        The Fetcher and BrainAtlas services are async-first. They don't wait for long-running operations—they queue work and return immediately. The Orchestrator's job is to coordinate these async workflows without blocking.
+      </p>
+
+      <h3>Batch-Based Processing</h3>
+
+      <p>
+        When a user requests a summary for the hippocampus, here's what happens behind the scenes:
+      </p>
+
+      <ol>
+        <li><strong>Query Generation:</strong> Orchestrator calls BrainAtlas to generate 3-5 diverse PubMed queries using an LLM. Example queries: "hippocampus anatomy", "hippocampal formation memory consolidation", "CA1 CA3 subfields electrophysiology".</li>
+        <li><strong>Batch Creation:</strong> Orchestrator creates a <code>region_processing_batch</code> row with <code>status='collecting'</code>. It stores the generated queries and sets <code>expected_task_count</code> (typically 60-100 papers across all queries).</li>
+        <li><strong>Fetcher Invocation:</strong> For each query, Orchestrator calls <code>POST /fetcher-be/api/queue/enqueue</code>. Fetcher returns task IDs immediately (e.g., <code>[task_1, task_2, ..., task_20]</code> for a query that found 20 papers).</li>
+        <li><strong>Batch Tracking:</strong> Orchestrator stores all task IDs in <code>batch.fetch_task_ids[]</code> and returns the <code>batch_id</code> to the frontend. The user sees "Fetching papers... 0/83 complete".</li>
+      </ol>
+
+      <p>
+        At this point, the Orchestrator is <em>done</em>. It doesn't poll, doesn't wait, doesn't block. Workers in the Fetcher service pick up those 83 tasks over the next few minutes. The Orchestrator has moved on to serve other requests.
+      </p>
+
+      <h3>The Completion Watcher</h3>
+
+      <p>
+        So how does the Orchestrator know when fetching finishes? A background task called the <em>completion watcher</em> runs in a loop:
+      </p>
+
+      <div class="architecture-diagram">loop {
+    sleep(30 seconds)
+    
+    batches = query("SELECT * FROM region_processing_batches 
+                     WHERE status IN ('collecting', 'ready')")
+    
+    for batch in batches {
+        task_statuses = query("SELECT status FROM fetch_tasks 
+                               WHERE id IN $1", batch.fetch_task_ids)
+        
+        if all_tasks_completed(task_statuses) {
+            update batch.status = 'ready'
+            invalidate_cache(batch.id)
+        }
+    }
+    
+    ready_batches = query("SELECT * FROM region_processing_batches 
+                           WHERE status = 'ready'")
+    
+    for batch in ready_batches {
+        trigger_brainatlas_processing(batch)
+    }
+}</div>
+
+      <p>
+        Every 30 seconds, the watcher checks if any collecting batches have finished. When all fetch tasks for a batch are complete, it transitions the batch to <code>ready</code> status and triggers BrainAtlas processing. The frontend polls <code>GET /batches/{id}/status</code> every 2 seconds and sees the progress: "Fetching papers... 83/83 complete. Processing..." → "Generating summary..." → "Complete!"
+      </p>
+
+      <h3>Why Not Webhooks?</h3>
+
+      <p>
+        You might ask: why polling instead of webhooks? If the Fetcher could call back to the Orchestrator when a batch completes, wouldn't that be more efficient?
+      </p>
+
+      <p>
+        We considered it. Webhooks have problems:
+      </p>
+
+      <ul>
+        <li><strong>Lost events:</strong> If the Orchestrator restarts during callback delivery, the event is lost.</li>
+        <li><strong>Ordering:</strong> If callbacks arrive out of order, you need deduplication logic.</li>
+        <li><strong>Authentication:</strong> The Fetcher needs credentials to call back, introducing circular dependencies.</li>
+        <li><strong>Complexity:</strong> More code paths, more failure modes, harder debugging.</li>
+      </ul>
+
+      <p>
+        Polling is simpler. The database is the source of truth. The watcher is stateless—it can restart without losing progress. If it misses a cycle, it catches up on the next one. We tune the interval (30s) to balance latency vs. database load. For a research tool where summary generation takes 2-5 minutes total, 30-second granularity is acceptable.
+      </p>
+    </section>
+
+    <section>
+      <h2>End-to-End: From Query to Summary</h2>
+
+      <p>
+        Let's trace a complete request through the system. A researcher opens the CortexMap frontend, searches for "Hippocampus", and clicks "Generate Summary".
+      </p>
+
+      <h3>Phase 1: Query Generation (5 seconds)</h3>
+
+      <p>
+        The frontend calls <code>POST /orch/regions/{hippocampus_uuid}/generate</code>. The Orchestrator doesn't know what PubMed queries to use for the hippocampus, so it asks an LLM:
+      </p>
+
+      <blockquote>
+        "Generate 5 diverse PubMed search queries to find research papers about the hippocampus. Include queries about anatomy, function, connectivity, disease, and electrophysiology. Return as structured JSON."
+      </blockquote>
+
+      <p>
+        The LLM (GPT-4o-mini via OpenRouter) responds in 2-3 seconds with queries like:
+      </p>
+
+      <ul>
+        <li><code>"hippocampus[Title/Abstract] AND (anatomy OR structure OR cytoarchitecture)"</code></li>
+        <li><code>"hippocampal formation AND (memory OR learning OR consolidation)"</code></li>
+        <li><code>"CA1 OR CA3 OR dentate gyrus AND electrophysiology"</code></li>
+        <li><code>"hippocampus AND (alzheimer OR dementia OR neurodegeneration)"</code></li>
+        <li><code>"hippocampus AND (place cells OR grid cells OR spatial navigation)"</code></li>
+      </ul>
+
+      <p>
+        These queries are stored in the <code>region_queries</code> table for reuse. Next time someone generates a hippocampus summary, we skip this step.
+      </p>
+
+      <h3>Phase 2: Paper Fetching (60-180 seconds)</h3>
+
+      <p>
+        The Orchestrator creates a batch and submits all 5 queries to the Fetcher service. The Fetcher queries PubMed's E-utilities API, which returns PMC IDs. Typically:
+      </p>
+
+      <ul>
+        <li>Query 1 finds 20 papers (PubMed limits results to 20 per query)</li>
+        <li>Query 2 finds 20 papers (some overlap with Query 1)</li>
+        <li>Query 3 finds 15 papers</li>
+        <li>Query 4 finds 20 papers</li>
+        <li>Query 5 finds 18 papers</li>
+      </ul>
+
+      <p>
+        Total: 93 tasks created. After deduplication (same PMC ID from multiple queries), maybe 75 unique papers.
+      </p>
+
+      <p>
+        Workers start claiming tasks. Each worker:
+      </p>
+
+      <ol>
+        <li>Calls PubMed's ESummary API for metadata (title, authors, abstract)</li>
+        <li>Calls PubMed's EFetch API for full-text XML</li>
+        <li>Uploads both to S3 at <code>s3://cortexmap-papers/regions/{hippocampus_uuid}/{pmc_id}.xml</code></li>
+        <li>Creates a <code>papers</code> table row linking PMC ID to S3 key</li>
+        <li>Marks the <code>fetch_task</code> complete</li>
+      </ol>
+
+      <p>
+        With 5 workers running, 75 papers download in about 90 seconds (15 papers per worker, ~6 seconds per paper). The frontend shows real-time progress: "Fetching papers... 27/75 complete".
+      </p>
+
+      <h3>Phase 3: Completion Detection (up to 30 seconds)</h3>
+
+      <p>
+        The watcher's next cycle (within 30 seconds) detects all tasks are done. It transitions the batch to <code>ready</code> and invalidates Redis cache for the batch status key. The frontend's next poll sees <code>status='ready'</code> and displays "Processing...".
+      </p>
+
+      <h3>Phase 4: LLM Processing (120-240 seconds)</h3>
+
+      <p>
+        The watcher calls <code>POST /brainatlas-be/api/process</code> with the S3 keys of the 75 papers. BrainAtlas:
+      </p>
+
+      <ol>
+        <li><strong>Downloads papers</strong> from S3 (5 seconds for 75 XML files)</li>
+        <li><strong>Chunks text</strong> into 1000-char segments. 75 papers × ~6 chunks/paper = 450 chunks (2 seconds)</li>
+        <li><strong>Generates embeddings</strong> for all 450 chunks via OpenRouter API. With batching, this takes 30-45 seconds.</li>
+        <li><strong>Inserts embeddings</strong> into PostgreSQL. One transaction, 450 rows. (3 seconds)</li>
+        <li><strong>RAG loop:</strong> LLM makes 4 search calls over 3 rounds, reads 40 total chunks, generates summary. (60-90 seconds depending on API latency)</li>
+        <li><strong>Stores summary:</strong> Inserts into <code>region_summary</code> table, links to batch. (1 second)</li>
+      </ol>
+
+      <p>
+        Total: ~120 seconds. The watcher marks the batch <code>completed</code> and invalidates all relevant caches.
+      </p>
+
+      <h3>Phase 5: Frontend Display (instant)</h3>
+
+      <p>
+        The frontend's next poll sees <code>status='Completed'</code>. It fetches the summary via <code>GET /orch/regions/{id}/summaries</code> and renders:
+      </p>
+
+      <blockquote>
+        "The hippocampus is a curved structure located in the medial temporal lobe [chunk:a3f7], consisting of several subregions including CA1, CA3, and the dentate gyrus [chunk:b8e2]. It plays a critical role in memory consolidation [chunk:c9f1] and spatial navigation [chunk:d4a6]..."
+      </blockquote>
+
+      <p>
+        Each <code>[chunk:id]</code> renders as a small numbered bubble. Hovering shows a tooltip: "Source: PMC3847291, query: 'hippocampus AND spatial memory'". Clicking opens the paper.
+      </p>
+
+      <p>
+        <strong>Total end-to-end time:</strong> ~3-4 minutes from request to complete summary with citations.
+      </p>
+    </section>
+
+    <section>
+      <h2>Robustness in Practice</h2>
+
+      <p>
+        Distributed systems fail in creative ways. Here's how CortexMap handles real-world failure scenarios we encountered during development and testing.
+      </p>
+
+      <h3>Scenario 1: PubMed API Rate Limiting</h3>
+
+      <p>
+        <strong>What happened:</strong> We submitted 10 queries simultaneously. PubMed's E-utilities API returned HTTP 429 (Too Many Requests) for 7 of them.
+      </p>
+
+      <p>
+        <strong>System response:</strong> The Fetcher uses the <code>backon</code> crate for exponential backoff. Failed requests retry after 1s, then 2s, then 4s, up to 16s max. All 10 queries eventually succeeded within 30 seconds. No manual intervention.
+      </p>
+
+      <p>
+        <strong>What we learned:</strong> Retries need jitter. Without it, all 7 failed requests would retry at exactly the same time, causing another 429. We added ±25% random jitter to spread retry attempts.
+      </p>
+
+      <h3>Scenario 2: Malformed XML from PubMed Central</h3>
+
+      <p>
+        <strong>What happened:</strong> Paper PMC8473920 returned XML with an unclosed <code>&lt;title&gt;</code> tag. Our XML parser choked, worker crashed.
+      </p>
+
+      <p>
+        <strong>System response:</strong> The task's heartbeat timestamp stopped updating. After 60 seconds, the recovery job reset it to <code>pending</code>. Another worker claimed it, hit the same error, and the cycle repeated until we hit max retry limit (5 attempts). Task marked permanently <code>failed</code> with error message logged.
+      </p>
+
+      <p>
+        <strong>What we learned:</strong> Not all "failures" are transient. We added better XML validation and error categorization. Network errors get retried; parse errors get marked failed immediately. This reduced wasted retry attempts by 40%.
+      </p>
+
+      <h3>Scenario 3: BrainAtlas Service Crash Mid-Processing</h3>
+
+      <p>
+        <strong>What happened:</strong> We deployed a new BrainAtlas version with a memory leak. The service OOM-killed itself 90 seconds into processing a batch of 100 papers (after embedding 320 of 600 chunks).
+      </p>
+
+      <p>
+        <strong>System response:</strong> The watcher's next cycle (30s later) found the batch still in <code>processing</code> state. It checked the BrainAtlas health endpoint, got no response, and logged a warning. The batch remained in <code>processing</code>—we don't auto-reset processing batches because they might be legitimately slow.
+      </p>
+
+      <p>
+        <strong>What we learned:</strong> We needed better observability. We added a <code>processing_started_at</code> timestamp to batches. If a batch is in <code>processing</code> for more than 10 minutes, the watcher marks it <code>failed</code> and logs an alert. We also added memory limits to the Docker container.
+      </p>
+
+      <h3>Scenario 4: PostgreSQL Connection Pool Exhaustion</h3>
+
+      <p>
+        <strong>What happened:</strong> We spawned 20 Fetcher workers. Each worker holds a database connection. Default pool size: 10. Workers started failing with "connection pool timeout" errors.
+      </p>
+
+      <p>
+        <strong>System response:</strong> Workers logged errors but didn't crash. The heartbeat mechanism detected stalled tasks (workers couldn't update the database) and reset them after 60s. Tasks eventually completed when worker count dropped below pool size.
+      </p>
+
+      <p>
+        <strong>What we learned:</strong> We increased the pool size to 50 and added connection pool monitoring. We also added a <code>max_workers</code> config parameter that prevents allocating more workers than available connections.
+      </p>
+
+      <h3>Scenario 5: Deduplication Preventing Wasted Work</h3>
+
+      <p>
+        <strong>What happened:</strong> A researcher generated a hippocampus summary, then immediately requested another one (they didn't realize the first was processing).
+      </p>
+
+      <p>
+        <strong>System response:</strong> The second request triggered query generation, fetching, and got all the way to BrainAtlas processing. But before generating embeddings, BrainAtlas computed a SHA-256 hash of the downloaded paper content. It found an existing <code>region_summary</code> row with the same <code>content_hash</code>. It returned that summary's ID immediately without calling the LLM.
+      </p>
+
+      <p>
+        <strong>What we learned:</strong> Content-addressable caching is powerful. We extended this to short-circuit the entire pipeline: if a batch with identical fetch task PMC IDs exists and completed successfully, we skip fetching and return the existing summary. This handles the common case of "user clicks Generate twice in a row".
+      </p>
+    </section>
+
+    <section>
+      <h2>Design Decisions and Trade-offs</h2>
+
+      <h3>PostgreSQL as a Message Broker</h3>
+
+      <p>
+        Most distributed task queues use dedicated message brokers: RabbitMQ, Redis, AWS SQS. We use PostgreSQL. Why?
+      </p>
+
+      <p>
+        <strong>Benefits:</strong>
+      </p>
+      <ul>
+        <li><strong>One less service:</strong> We already run PostgreSQL for data storage. Adding a message broker means another service to deploy, monitor, backup, and secure.</li>
+        <li><strong>ACID transactions:</strong> Creating a batch, generating queries, and enqueueing fetch tasks happens in one atomic transaction. Either all succeed or all roll back. Can't achieve this with separate queue service.</li>
+        <li><strong>SQL-based debugging:</strong> We can directly query <code>SELECT * FROM fetch_tasks WHERE status='failed'</code> to debug issues. No need to learn RabbitMQ management console or SQS CLI.</li>
+        <li><strong>Proven scaling:</strong> PostgreSQL with <code>SKIP LOCKED</code> handles thousands of tasks/second. Our peak load is ~100 tasks/minute. We're not stressing it.</li>
+      </ul>
+
+      <p>
+        <strong>Trade-offs:</strong>
+      </p>
+      <ul>
+        <li><strong>No pub/sub:</strong> PostgreSQL doesn't natively support fanout (one message to many consumers). We don't need it—each task has one consumer.</li>
+        <li><strong>Polling overhead:</strong> Workers continuously poll for tasks. Adds database load. We mitigate with connection pooling and smart sleep intervals.</li>
+        <li><strong>Not designed for this:</strong> Message brokers have features like message TTL, priority queues, and DLQs built-in. We implement these manually.</li>
+      </ul>
+
+      <p>
+        Would we switch to RabbitMQ at scale? Maybe. If we needed 10K tasks/second sustained, we'd revisit. For now, PostgreSQL is the right tool.
+      </p>
+
+      <h3>Self-Hosted LLMs vs. API Calls</h3>
+
+      <p>
+        The original project spec called for "self-hosted LLMs (BioGPT)". We use OpenRouter API instead. Why the change?
+      </p>
+
+      <p>
+        <strong>What we tried:</strong> We ran BioGPT (a GPT-2 derivative fine-tuned on PubMed) on university GPU hardware. Results were mixed:
+      </p>
+
+      <ul>
+        <li><strong>Query generation:</strong> BioGPT generated syntactically correct PubMed queries but they were too narrow. Example: for "hippocampus", it generated <code>"hippocampus[MeSH Terms]"</code> which misses papers that use informal terminology.</li>
+        <li><strong>Summarization:</strong> Summaries were factual but stilted. BioGPT struggled with complex sentence structures and transitional phrases.</li>
+        <li><strong>Tool calling:</strong> BioGPT doesn't support function calling. We had to implement a custom parser for the RAG loop, which was brittle.</li>
+      </ul>
+
+      <p>
+        <strong>What we switched to:</strong> GPT-4o-mini via OpenRouter. Cost: ~$0.15 per summary (query generation + embedding + RAG synthesis). For 1,328 regions, total LLM cost is ~$200. This is acceptable for a research project.
+      </p>
+
+      <p>
+        <strong>The trade-off:</strong> We depend on an external API. If OpenRouter goes down or changes pricing, we're affected. For a production service with thousands of users, this might be unacceptable. For a research tool used by 10-20 concurrent users, the convenience and quality win.
+      </p>
+
+      <p>
+        We architected for swappability. The LLM interface is a trait. Switching to a self-hosted model requires implementing that trait, not rewriting the RAG loop.
+      </p>
+
+      <h3>Batch Processing vs. Streaming</h3>
+
+      <p>
+        Why do we fetch all papers before starting summarization? Why not stream: as each paper arrives, embed it and update the summary incrementally?
+      </p>
+
+      <p>
+        <strong>Batch advantages:</strong>
+      </p>
+      <ul>
+        <li><strong>Deduplication:</strong> Content hashing only works if you have all papers upfront.</li>
+        <li><strong>LLM coherence:</strong> Generating a summary from 50 papers in one RAG session produces better prose than merging 50 separately-generated snippets.</li>
+        <li><strong>Citation consistency:</strong> Chunk IDs are stable. Streaming would require updating IDs as new chunks arrive.</li>
+      </ul>
+
+      <p>
+        <strong>Streaming advantages:</strong>
+      </p>
+      <ul>
+        <li><strong>Lower latency:</strong> Users see partial results sooner.</li>
+        <li><strong>Fault tolerance:</strong> If processing fails, you keep partial progress.</li>
+      </ul>
+
+      <p>
+        We chose batches because summary coherence is more important than latency for this use case. Researchers would rather wait 3 minutes for a good summary than get a mediocre one in 1 minute.
+      </p>
+    </section>
+
+    <section>
+      <h2>What We'd Do Differently</h2>
+
+      <h3>Observability from Day One</h3>
+
+      <p>
+        We added logging, but we didn't add metrics until we hit scaling issues. In hindsight, we should have instrumented with Prometheus and Grafana from the start. Key metrics we wish we'd tracked:
+      </p>
+
+      <ul>
+        <li>Task queue depth over time (detect backlog building)</li>
+        <li>Worker utilization (how often are workers idle?)</li>
+        <li>LLM API latency percentiles (P50, P95, P99)</li>
+        <li>Cache hit rates by endpoint</li>
+        <li>Database connection pool usage</li>
+      </ul>
+
+      <p>
+        Adding these post-hoc required sprinkling instrumentation throughout the codebase. Doing it upfront would have been easier.
+      </p>
+
+      <h3>Rate Limiting Earlier</h3>
+
+      <p>
+        We hit PubMed's rate limits multiple times during development before implementing proper throttling. We should have added rate limiting from the start:
+      </p>
+
+      <ul>
+        <li>Token bucket for PubMed API (10 requests/second max)</li>
+        <li>OpenRouter has per-model limits—track across parallel requests</li>
+        <li>Backpressure when workers exceed available database connections</li>
+      </ul>
+
+      <p>
+        Rate limiting is easier to build in than retrofit. We ended up with ad-hoc <code>sleep(500ms)</code> calls scattered through the code. A centralized rate limiter would be cleaner.
+      </p>
+
+      <h3>Better Error Categorization</h3>
+
+      <p>
+        Our initial retry logic was naive: retry everything up to 5 times. This wasted time on errors that would never succeed (malformed XML, HTTP 404). We should have categorized errors from the start:
+      </p>
+
+      <ul>
+        <li><strong>Transient:</strong> Network timeout, rate limit, 503 server error → Retry</li>
+        <li><strong>Permanent:</strong> 404 not found, parse error, invalid PMC ID → Fail immediately</li>
+        <li><strong>Client error:</strong> Bad request, authentication failure → Alert and fail</li>
+      </ul>
+
+      <p>
+        This would have saved ~30% of retry attempts during development.
+      </p>
+
+      <h3>Structured Logging Sooner</h3>
+
+      <p>
+        We started with <code>println!</code> debugging. Switched to <code>env_logger</code> mid-project. Switched to <code>tracing</code> late in development. If we'd started with structured logging (JSON logs with correlation IDs), debugging distributed traces would've been easier.
+      </p>
+
+      <p>
+        Example: tracking a batch through the pipeline required grepping logs across three services. With correlation IDs, we could filter <code>batch_id=abc123</code> and see the full journey.
+      </p>
+    </section>
+
+    <section>
+      <h2>Future Work</h2>
+
+      <h3>Interactive Exploration</h3>
+
+      <p>
+        Currently, summaries are static. Users can't ask follow-up questions like "Tell me more about place cells" or "How does the hippocampus interact with the prefrontal cortex?" We're exploring conversational RAG: users chat with the system, which retrieves relevant chunks on-demand and answers questions.
+      </p>
+
+      <p>
+        This requires session management and conversation history. The backend would maintain a per-user conversation state with retrieved chunks and LLM messages.
+      </p>
+
+      <h3>Federated Search</h3>
+
+      <p>
+        CortexMap currently covers the Allen Mouse Brain Atlas (1,328 regions). We'd like to expand to human, rat, and non-human primate atlases. Challenges:
+      </p>
+
+      <ul>
+        <li>Different region naming conventions (mouse "CA1" vs. human "hippocampus CA1 field")</li>
+        <li>Cross-species homology mappings</li>
+        <li>Scaling the database (10K+ regions × 50 papers/region = 500K papers)</li>
+      </ul>
+
+      <p>
+        This would enable comparative queries: "How does hippocampal neurogenesis differ between mice and humans?"
+      </p>
+
+      <h3>Real-Time Updates</h3>
+
+      <p>
+        Neuroscience research moves fast. Summaries become stale. We'd like to run periodic refreshes: every month, check PubMed for new papers, fetch them, and regenerate summaries. Challenges:
+      </p>
+
+      <ul>
+        <li>Detecting meaningful updates (new papers might not change the summary)</li>
+        <li>Showing diffs to users ("5 new papers added since last summary")</li>
+        <li>Cost management (1,328 regions × 12 updates/year = 16K summaries)</li>
+      </ul>
+
+      <p>
+        We're exploring incremental updates: embed new papers, search against them, and append to existing summaries instead of regenerating from scratch.
+      </p>
+
+      <h3>User Annotations</h3>
+
+      <p>
+        Researchers are domain experts. They might notice errors or want to add context. We'd like to support annotations: users can flag chunks as incorrect, add clarifying notes, or suggest additional citations.
+      </p>
+
+      <p>
+        This requires authentication, access control, and a moderation workflow. But it would make CortexMap a collaborative knowledge base instead of a read-only tool.
+      </p>
+    </section>
+
+    <section>
+      <h2>Conclusion</h2>
+
+      <p>
+        Building CortexMap taught us that AI-powered research tools require more than just an LLM API. The real engineering is in the infrastructure: distributed task queues that handle failures gracefully, vector databases that provide semantic search at scale, and orchestration layers that coordinate async workflows without blocking.
+      </p>
+
+      <p>
+        We didn't need Kubernetes or a service mesh. We needed clear service boundaries, PostgreSQL with smart features (<code>SKIP LOCKED</code>, pgvector), and careful attention to failure modes. The result is a system that processes thousands of papers, generates cited summaries in minutes, and runs reliably on modest infrastructure.
+      </p>
+
+      <p>
+        The code is ~10,000 lines of Rust across three services. The database schema is 10 tables. The deployment is a Docker Compose file. Complexity emerged from the problem domain (coordinating LLMs, managing async pipelines, tracking citations), not from over-engineering.
+      </p>
+
+      <p>
+        If you're building similar systems—ETL pipelines that feed LLMs, RAG applications that need citation tracking, distributed task queues for research workflows—we hope this writeup provides useful patterns. The full stack (Rust + PostgreSQL + pgvector + OpenRouter) proved remarkably capable.
+      </p>
+
+      <p>
+        CortexMap is open-source and deployed at Penn State for neuroscience research. We're excited to see what researchers discover using it.
+      </p>
+    </section>
+
+    <footer>
+      <p>&copy; 2026 Sandipsinh Rathod</p>
+    </footer>
+  </div>
+  <div id="right"></div>
+</body>
+</html>

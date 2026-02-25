@@ -1,0 +1,344 @@
+/* Base styles shared across all pages */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-primary: #f5f5f5;
+  --bg-card: #ffffff;
+  --text-primary: #303030;
+  --text-secondary: #696969;
+  --accent: #2563eb;
+  --shadow: rgba(128, 128, 128, 0.3);
+  --border: #e0e0e0;
+  --code-bg: #f4f4f4;
+  --grid-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='100' width='100'%3E%3Cpath stroke='%23e8e8e8' d='M10.5,0v100m10,0v-100m10,0v100m10,0v-100m10,0v100m10,0v-100m10,0v100m10,0v-100m10,0v100M0,10.5h100m0,10h-100m0,10h100m0,10h-100m0,10h100m0,10h-100m0,10h100m0,10h-100m0,10h100'/%3E%3Cpath stroke='%23d8d8d8' d='M0.5,0v100M0,0.5h100'/%3E%3C/svg%3E");
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--bg-primary);
+  background-image: var(--grid-bg);
+  background-position: top;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Three-column layout */
+#left { flex: 1 100; }
+#center {
+  flex: 0 1 900px;
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+  padding: 20px 10px;
+}
+#right { flex: 1 100; }
+
+/* Typography */
+h1 {
+  margin: 0 0 0.5em 0;
+  font-size: 2.5em;
+  color: var(--text-primary);
+}
+
+h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+p {
+  margin: 0.8em 0;
+  line-height: 1.6;
+}
+
+strong {
+  color: var(--text-primary);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Card component */
+.card {
+  padding: 0.8em;
+  box-shadow: 0 0 0.25em var(--shadow);
+  background-color: var(--bg-card);
+  border-radius: 0.15em;
+  margin-bottom: 0.8em;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.2em 0.5em var(--shadow);
+}
+
+a.card:hover h3 {
+  text-decoration: underline;
+}
+
+.card h3 {
+  margin: 0 0 0.5em 0;
+  font-size: 1.2em;
+  color: var(--text-primary);
+}
+
+.card-title {
+  margin: 0 0 -0.1em 0;
+  font-size: 1.6em;
+  color: var(--text-primary);
+}
+
+.card-meta {
+  font-size: 0.85em;
+  color: var(--text-secondary);
+  margin-bottom: 0.5em;
+}
+
+.card-desc {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.card-desc a {
+  color: var(--text-primary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-desc a:hover {
+  border-bottom-color: var(--text-primary);
+}
+
+/* Header component */
+header {
+  margin: 0 0 1.5em 0;
+  padding: 0.8em;
+  box-shadow: 0 0 0.25em var(--shadow);
+  background-color: var(--bg-card);
+  border-radius: 0.15em;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-title {
+  margin: -0.225em 0;
+  font-size: 3em;
+  font-weight: bold;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.blog-title:hover {
+  text-decoration: underline;
+}
+
+.sub-title {
+  margin: 0;
+  font-size: 1.1em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+/* Footer component */
+footer {
+  text-align: center;
+  padding: 0.8em;
+  margin-top: 0;
+  color: var(--text-secondary);
+  box-shadow: 0 0 0.25em var(--shadow);
+  background-color: var(--bg-card);
+  border-radius: 0.15em;
+}
+
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Social links */
+.social-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.social-links a {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.social-links a:hover {
+  color: var(--accent);
+}
+
+.social-links svg {
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.8em;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  padding: 0.2em 0.6em;
+  border-radius: 0.15em;
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+/* Avatar */
+.avatar {
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Back link */
+.back-link {
+  display: inline-block;
+  margin-bottom: 2em;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* Meta text */
+.meta {
+  color: var(--text-secondary);
+  font-size: 0.9em;
+  margin-bottom: 1em;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.75em 1.5em;
+  background-color: var(--bg-card);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  border-radius: 0.25em;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: var(--accent);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.btn-group {
+  display: flex;
+  gap: 1em;
+  margin-top: 1.5em;
+  flex-wrap: wrap;
+}
+
+.github-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 1em;
+  padding: 0.6em 1em;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: 0.25em;
+  font-size: 0.9em;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.2s ease;
+  border: 1px solid var(--border);
+}
+
+.github-btn:hover {
+  background: var(--accent);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.github-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #center {
+    min-width: 0;
+    max-width: 100%;
+    padding: 12px 6px;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+  }
+
+  .social-links {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .blog-title {
+    font-size: 2em;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.3em;
+  }
+
+  footer {
+    font-size: 0.85em;
+    padding: 0.8em;
+  }
+}
