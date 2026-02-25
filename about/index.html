@@ -46,6 +46,16 @@
       width: 128px;
     }
 
+    .card-desc ul {
+      margin: 0.5em 0 0 1.5em;
+      padding: 0;
+    }
+
+    .card-desc ul li {
+      margin-bottom: 0.4em;
+      line-height: 1.5;
+    }
+
     @media (max-width: 600px) {
       .content .avatar {
         width: 96px;
@@ -120,28 +130,39 @@
       <h2>Experience</h2>
 
       <div class="card">
-        <h3>Senior Backend Engineer</h3>
-        <div class="card-meta">2022 - PRESENT</div>
+        <img class="company-logo" src="../assets/imgs/companies/forge.svg" alt="Forge Code logo">
+        <h3>Software Engineering Intern</h3>
+        <div class="card-meta">Forge Code · May 2025 - August 2025</div>
         <p class="card-desc">
-          Architecting microservices with gRPC, reducing inter-service latency by 60%. Leading performance optimization 
-          initiatives across the backend infrastructure.
+          Forge is an AI-powered CLI coding assistant with MCP integration, multi-agent workflows, and advanced context management.
         </p>
+        <div class="card-desc">
+          <ul>
+            <li>Designed cryptographic authentication system using Ed25519 signatures for secure CLI-to-backend communication</li>
+            <li>Built OAuth2 login flow with browser authentication, token management, and session handling</li>
+            <li>Implemented TLS/mTLS support with configurable certificate handling</li>
+            <li>Created policy-based permission system for tool access control with YAML configuration</li>
+            <li>Enhanced file search with regex/glob patterns and added fuzzy autocomplete for commands</li>
+          </ul>
+        </div>
       </div>
 
       <div class="card">
-        <h3>Backend Developer</h3>
-        <div class="card-meta">2020 - 2022</div>
+        <img class="company-logo" src="../assets/imgs/companies/tailcall.svg" alt="Tailcall logo">
+        <h3>Software Engineering Intern</h3>
+        <div class="card-meta">Tailcall · Oct 2023 - Jul 2024</div>
         <p class="card-desc">
-          Built scalable GraphQL APIs handling 10M+ requests/day. Implemented distributed tracing and monitoring systems.
+          Tailcall is a high-performance open-source API orchestrator for unifying backends across REST, GraphQL, and gRPC.
         </p>
-      </div>
-
-      <div class="card">
-        <h3>Systems Engineer</h3>
-        <div class="card-meta">2018 - 2020</div>
-        <p class="card-desc">
-          Optimized database queries and API endpoints. Reduced P99 latency from 500ms to 50ms.
-        </p>
+        <div class="card-desc">
+          <ul>
+            <li>Architected TargetRuntime abstraction for Cloudflare Workers and WASM environments</li>
+            <li>Implemented custom GraphQL scalars, gRPC reflection, and JWT authentication for WASM</li>
+            <li>Optimized N+1 detection using dynamic programming, reducing analysis from hours to seconds</li>
+            <li>Achieved 6× throughput increase (5.1k to 30.2k req/s) with JIT-optimized execution layer</li>
+            <li>Built configuration autogeneration from Protobuf with enum validation</li>
+          </ul>
+        </div>
       </div>
     </section>
 
