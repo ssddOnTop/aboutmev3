@@ -10,11 +10,14 @@
     /* Page-specific styles */
     .content {
       padding: 0.8em;
-      flex: 1 1 auto;
       margin: 0 0 1.5em 0;
       border-radius: 0.15em;
       background-color: var(--bg-card);
       box-shadow: 0 0 0.25em var(--shadow);
+    }
+
+    .content > *:last-child {
+      margin-bottom: 0;
     }
 
     .content h1 {
@@ -106,34 +109,41 @@
         implemented several cryptographic algorithms -- RSA, DH, AES(CBC), XChaCha20 -- and learned how TLS works under the hood.
       </p>
 
-      <p>
+      <p style="margin-bottom: 0;">
         If you wish to contact me, I can be reached via <a href="mailto:sandip@ssdd.dev">email</a>, 
         <a href="https://www.linkedin.com/in/ssdddev" target="_blank" rel="noopener">LinkedIn</a>, or 
         <a href="https://ssdddev.t.me" target="_blank" rel="noopener">Telegram</a>.
       </p>
-
-      <h2>Senior Backend Engineer</h2>
-      <p class="sub-title">2022 - PRESENT</p>
-
-      <p>
-        Architecting microservices with gRPC, reducing inter-service latency by 60%. Leading performance optimization 
-        initiatives across the backend infrastructure.
-      </p>
-
-      <h2>Backend Developer</h2>
-      <p class="sub-title">2020 - 2022</p>
-
-      <p>
-        Built scalable GraphQL APIs handling 10M+ requests/day. Implemented distributed tracing and monitoring systems.
-      </p>
-
-      <h2>Systems Engineer</h2>
-      <p class="sub-title">2018 - 2020</p>
-
-      <p>
-        Optimized database queries and API endpoints. Reduced P99 latency from 500ms to 50ms.
-      </p>
     </div>
+
+    <section>
+      <h2>Experience</h2>
+
+      <div class="card">
+        <h3>Senior Backend Engineer</h3>
+        <div class="card-meta">2022 - PRESENT</div>
+        <p class="card-desc">
+          Architecting microservices with gRPC, reducing inter-service latency by 60%. Leading performance optimization 
+          initiatives across the backend infrastructure.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Backend Developer</h3>
+        <div class="card-meta">2020 - 2022</div>
+        <p class="card-desc">
+          Built scalable GraphQL APIs handling 10M+ requests/day. Implemented distributed tracing and monitoring systems.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Systems Engineer</h3>
+        <div class="card-meta">2018 - 2020</div>
+        <p class="card-desc">
+          Optimized database queries and API endpoints. Reduced P99 latency from 500ms to 50ms.
+        </p>
+      </div>
+    </section>
 
     <footer>
       <p>&copy; 2026 Sandipsinh Rathod</p>
