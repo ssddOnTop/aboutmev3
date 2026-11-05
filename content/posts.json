@@ -1,0 +1,361 @@
+[
+  {
+    "slug": "about-me-and-my-work",
+    "home": true,
+    "year": 2026,
+    "kind": "About",
+    "title": "Sandipsinh Rathod",
+    "summary": "Backend systems, developer tools, and the work that led me here. A personal introduction through projects and open-source contributions.",
+    "paragraphs": [
+      "I build backend systems and developer tools, mostly in Rust. I like understanding what happens below the surface: how queries run, how services communicate, and where programs spend time.",
+      "I started by taking Android apps apart, then building my own. That curiosity led me to cryptography libraries, GraphQL runtimes, and tools for coding agents."
+    ],
+    "timeline_intro": "Here are some things I've worked on, starting with the most recent.",
+    "links": [
+      {
+        "label": "My code on GitHub",
+        "url": "https://github.com/ssddOnTop"
+      }
+    ],
+    "related": [
+      "forgecode-tools",
+      "tailcall-runtime",
+      "async-jsonl",
+      "why-this-site-uses-posts"
+    ]
+  },
+  {
+    "slug": "forgecode-macos",
+    "year": 2026,
+    "kind": "Work",
+    "title": "Making ForgeCode feel at home on macOS",
+    "summary": "Automatic updates, a simpler installer, and a native menu-bar interface.",
+    "paragraphs": [
+      "In 2026 I worked on the macOS experience around ForgeCode: how it is installed, updated, and accessed from the menu bar.",
+      "My merged contributions included automatic updates with Sparkle, a simpler installer, and work on the native menu interface. These changes live in the public installer repository, separate from the coding agent's core.",
+      "This is the less visible side of developer tooling: getting an application onto a machine and keeping it usable after its first launch."
+    ],
+    "links": [
+      {"label": "Public macOS installer source", "url": "https://github.com/tailcallhq/forgecode-sdk-installers"}
+    ],
+    "related": ["forgecode-acp", "forgecode-tools"]
+  },
+  {
+    "slug": "forgecode-acp",
+    "year": 2026,
+    "kind": "Work",
+    "title": "Connecting ForgeCode through the Agent Client Protocol",
+    "summary": "Agent Client Protocol integration in ForgeCode and forgecode-sdk, connecting coding agents to their clients.",
+    "paragraphs": [
+      "I contributed to ForgeCode's Agent Client Protocol integration in 2026. ACP provides a boundary between an agent and the clients that interact with it.",
+      "I also worked on ACP integration in forgecode-sdk. That repository is private, so the source links below cover only my public ForgeCode contributions.",
+      "This continued my earlier work on the agent's tool layer, but at a different boundary: instead of connecting the agent to tools, this work connected it to clients. My public ForgeCode contributions landed in the phase-two and phase-three integration PRs linked below."
+    ],
+    "links": [
+      {"label": "ACP integration: phase two", "url": "https://github.com/tailcallhq/forgecode/pull/2380"},
+      {"label": "ACP integration: phase three", "url": "https://github.com/tailcallhq/forgecode/pull/2400"},
+      {"label": "ForgeCode source", "url": "https://github.com/tailcallhq/forgecode"}
+    ],
+    "related": ["forgecode-tools", "forgecode-macos", "mcp-rust-sdk"]
+  },
+  {
+    "slug": "microkernel",
+    "year": 2026,
+    "kind": "Project",
+    "title": "Building a microkernel in Rust",
+    "summary": "My final project for an operating-systems class, exploring IPC, capabilities, scheduling, and resource domains.",
+    "paragraphs": [
+      "I built a Rust microkernel as my final project for an operating-systems class. It explores inter-process communication, capability-based access control, scheduling, and resource domains.",
+      "The repository includes the implementation, tests, and a documented bare-metal QEMU boot path. I used it to learn about operating-system boundaries, not to build a production operating system.",
+      "Most of my other work runs on top of an OS. This project was a chance to work on the abstractions beneath those programs instead."
+    ],
+    "links": [
+      {"label": "Source, design, and QEMU instructions", "url": "https://github.com/ssddOnTop/microkernel"}
+    ],
+    "related": ["ufwprofile", "tailcall-runtime"]
+  },
+  {
+    "slug": "why-this-site-uses-posts",
+    "year": 2026,
+    "kind": "Writing",
+    "title": "Why this site uses posts",
+    "summary": "The decisions behind this site: one format for my work, a compact yearly index, and very little machinery.",
+    "paragraphs": [
+      "My old homepage had a blog section and a list of achievements. It said surprisingly little about the work itself: what I built, which part I contributed, or why I made a particular choice. Adding more project names would not fix that.",
+      "I wanted one way to describe that work, whether it was a project, a small contribution, or a longer technical article. This post records the choices behind that structure."
+    ],
+    "sections": [
+      {
+        "id": "one-format",
+        "title": "One format, different amounts of detail",
+        "paragraphs": [
+          "A project, an upstream fix, and a technical article can all be posts. Each gets a stable page with enough context to answer: what was the problem, what did I do, and where can you inspect the result? A small contribution might need two paragraphs and a pull-request link. A larger project can justify a longer explanation.",
+          "The alternative was separate sections for projects, contributions, achievements, and blogs. That would make me decide where something belongs before writing about it. One format avoids that bookkeeping. It does cost more effort than dropping a repository link onto a page; the explanation is the part worth spending that effort on."
+        ]
+      },
+      {
+        "id": "chronological-index",
+        "title": "Chronology is useful, but it is not a ranking",
+        "paragraphs": [
+          "The index is grouped by year. I want to show how my work has developed, not turn the site into an activity feed. Years are enough for that. They also avoid giving a retrospective project note a precise publication date it never had.",
+          "The homepage continues from my introduction into a compact list of posts. The trade-off is that older work sits farther down the page. Year headings keep that work easy to locate."
+        ]
+      },
+      {
+        "id": "less-machinery",
+        "title": "Keep the machinery smaller than the content",
+        "paragraphs": [
+          "The site serves plain HTML and CSS. A small Python script generates the indexes and post pages from a shared content file. There is no client-side router, and reading or following a link does not require JavaScript.",
+          "The trade-off is explicit: editing a post requires regenerating the pages. For this small collection, that seems preferable to maintaining an application just to publish text. The visual design follows the same choice: a white background, familiar links, and no decorative panels."
+        ]
+      }
+    ],
+    "links_intro": "I got inspired by",
+    "links": [
+      {"label": "Russ Cox’s website", "url": "https://swtch.com/~rsc/"}
+    ],
+    "related": ["forgecode-tools", "tailcall-runtime", "async-jsonl"]
+  },
+  {
+    "slug": "gpmcp-layer",
+    "year": 2025,
+    "kind": "Project",
+    "title": "A process layer for MCP servers",
+    "summary": "Cross-platform process management in gpmcp's public Rust tooling.",
+    "paragraphs": [
+      "As part of my gpmcp work, I refactored MCP process management behind a cross-platform abstraction in the public layer library.",
+      "That work separates process-management concerns from the code using an MCP server. The merged architecture change is linked below, along with the library's source.",
+      "Other public tools from this work include async-jsonl and registry-testkit. Each has its own note in this timeline."
+    ],
+    "links": [
+      {"label": "MCP process library", "url": "https://github.com/gpmcp/layer"},
+      {"label": "Process-manager architecture", "url": "https://github.com/gpmcp/layer/pull/11"}
+    ],
+    "related": ["async-jsonl", "registry-testkit", "mcp-rust-sdk"]
+  },
+  {
+    "slug": "forgecode-tools",
+    "year": 2025,
+    "kind": "Work",
+    "title": "Building the tool layer in ForgeCode",
+    "summary": "Tool registration, MCP integration, and permissions for an open-source coding agent.",
+    "paragraphs": [
+      "Much of my work on ForgeCode in 2025 was on the machinery between an agent deciding to use a tool and that tool actually running. That included the tool registry, MCP integration, authentication, and permission policies.",
+      "I contributed to the ToolRegistry re-architecture, support for MCP configuration through .mcp.json, the browser-based login flow, and the task-list tool. Later work included JSON repair and a policy engine for controlling tool access.",
+      "These were contributions to a larger team-built coding agent, not a standalone project. The links below lead to the public implementation and my merged changes."
+    ],
+    "links": [
+      {"label": "ForgeCode source", "url": "https://github.com/tailcallhq/forgecode"},
+      {"label": "My merged contributions in 2025", "url": "https://github.com/tailcallhq/forgecode/pulls?q=is%3Apr+is%3Amerged+author%3AssddOnTop+merged%3A2025-01-01..2025-12-31"}
+    ],
+    "related": ["mcp-rust-sdk", "tailcall-runtime"]
+  },
+  {
+    "slug": "api-keys-simplified",
+    "year": 2025,
+    "kind": "Project",
+    "title": "An API-key library for Rust",
+    "summary": "Key generation, hashing, and validation in api-keys-simplified.",
+    "paragraphs": [
+      "I published api-keys-simplified in 2025 to bring API-key generation and verification into one Rust library. It includes configurable key prefixes, hashing, expiration, and validation.",
+      "The implementation uses Argon2id for stored hashes, BLAKE3 checksums to reject malformed tokens before expensive hashing, and types that redact and clear sensitive values. Those mechanisms address different parts of the problem; a checksum is not a substitute for authenticating a key.",
+      "Follow-up work continued in 2026, including fixes to expiry verification and timing behavior. The repository records those changes. This is a project note, not a claim that the library has undergone an independent security audit."
+    ],
+    "links": [
+      {"label": "Source and design notes", "url": "https://github.com/gpmcp/api-keys-simplified"},
+      {"label": "Crate and documentation", "url": "https://crates.io/crates/api-keys-simplified"}
+    ],
+    "related": ["registry-testkit", "encrypto"]
+  },
+  {
+    "slug": "registry-testkit",
+    "year": 2025,
+    "kind": "Project",
+    "title": "A container registry for integration tests",
+    "summary": "registry-testkit runs a small registry inside a Rust test suite.",
+    "paragraphs": [
+      "Registry clients need to be tested against more than mocked function calls. I built registry-testkit to start an in-process container registry that a test can push images to and pull images from.",
+      "It supports in-memory or filesystem storage and can bind to an automatically assigned port. The implementation is built with Rust, Axum, and Tokio, with integration tests that exercise image operations through a Docker client.",
+      "The aim is a small, disposable registry for tests, not a replacement for a production registry service."
+    ],
+    "links": [
+      {"label": "Source and examples", "url": "https://github.com/gpmcp/registry-testkit"},
+      {"label": "Published crate", "url": "https://crates.io/crates/registry-testkit"}
+    ],
+    "related": ["api-keys-simplified", "gh-workflow"]
+  },
+  {
+    "slug": "when2task",
+    "year": 2025,
+    "kind": "Writing / project",
+    "title": "Taming dependency hell in async Rust",
+    "summary": "when2task: turning task dependencies into an async execution plan.",
+    "paragraphs": [
+      "Some tasks can run independently; others need the output of earlier tasks. I built when2task to describe those dependencies explicitly and turn them into an execution plan.",
+      "The library separates a task blueprint from execution. It uses dependency ordering to decide which tasks are ready, and its builder separates blueprint errors from errors encountered while running tasks.",
+      "I wrote about the design in Taming Dependency Hell in Async Rust. The original article is linked below, alongside the implementation."
+    ],
+    "links": [
+      {"label": "Read the original article", "url": "https://blog.ssdd.dev/taming-dependency-hell-in-async-rust"},
+      {"label": "when2task source", "url": "https://github.com/ssddOnTop/when2task"},
+      {"label": "Published crate", "url": "https://crates.io/crates/when2task"}
+    ],
+    "related": ["async-jsonl", "forgecode-tools"]
+  },
+  {
+    "slug": "async-jsonl",
+    "year": 2025,
+    "kind": "Writing / project",
+    "title": "Reading JSON Lines without loading the whole file",
+    "summary": "Async, typed JSONL streams in Rust, plus a reverse-order line reader.",
+    "paragraphs": [
+      "I built async-jsonl for processing JSON Lines incrementally with Tokio. Instead of first collecting an entire file, callers can consume a stream of lines and deserialize them into Rust types with Serde.",
+      "The library works with AsyncRead sources and includes helpers for counting lines and reading the first or last entries. Work on reading from the end of a file also became a separate crate, async-rev-buf.",
+      "My original article walks through building the library. The source and documentation below contain the API and examples; this note brings the writing and the project together in one place."
+    ],
+    "links": [
+      {"label": "Read the original article", "url": "https://blog.ssdd.dev/building-async-jsonl"},
+      {"label": "Source and examples", "url": "https://github.com/gpmcp/async-jsonl"},
+      {"label": "async-jsonl crate", "url": "https://crates.io/crates/async-jsonl"},
+      {"label": "async-rev-buf crate", "url": "https://crates.io/crates/async-rev-buf"}
+    ],
+    "related": ["when2task", "registry-testkit"]
+  },
+  {
+    "slug": "mcp-rust-sdk",
+    "year": 2025,
+    "kind": "Contribution",
+    "title": "Small fixes to the MCP Rust SDK",
+    "summary": "Deriving tool descriptions from doc comments, and fixing a Rust 2024 build break.",
+    "paragraphs": [
+      "I contributed two merged patches to the official Model Context Protocol Rust SDK in 2025.",
+      "The first fixed a compilation error caused by gen becoming a reserved keyword in Rust 2024. The fix used a raw identifier when referring to the schema generator.",
+      "The second extended the tool macro to derive a tool's description from Rust doc comments when no explicit description is supplied. This removes the need to maintain the same description in two places, while keeping explicit descriptions working as before."
+    ],
+    "links": [
+      {"label": "Doc-comment descriptions: merged PR", "url": "https://github.com/modelcontextprotocol/rust-sdk/pull/141"},
+      {"label": "Compilation fix: merged PR", "url": "https://github.com/modelcontextprotocol/rust-sdk/pull/104"}
+    ],
+    "related": ["forgecode-tools", "upstream-graphql"]
+  },
+  {
+    "slug": "gh-workflow",
+    "year": 2024,
+    "kind": "Contribution",
+    "title": "GitHub Actions, written in Rust",
+    "summary": "Schema-generated types, a typed Cargo API, and drift checks for gh-workflow.",
+    "paragraphs": [
+      "I contributed to gh-workflow during its early development in 2024. The library lets a project describe GitHub Actions workflows in Rust and generate the YAML that GitHub runs.",
+      "My work included generating the Rust data model from the workflow JSON Schema, helping the project generate its own CI configuration, and introducing a typed Cargo command API.",
+      "I also added a CI validation mode that compares generated output with the committed workflow. A missing or stale workflow becomes an explicit error instead of silently drifting away from the Rust definition."
+    ],
+    "links": [
+      {"label": "gh-workflow source", "url": "https://github.com/tailcallhq/gh-workflow"},
+      {"label": "Schema generation", "url": "https://github.com/tailcallhq/gh-workflow/pull/5"},
+      {"label": "CI drift detection", "url": "https://github.com/tailcallhq/gh-workflow/pull/21"},
+      {"label": "Typed Cargo API", "url": "https://github.com/tailcallhq/gh-workflow/pull/22"}
+    ],
+    "related": ["tailcall-runtime", "registry-testkit"]
+  },
+  {
+    "slug": "tailcall-runtime",
+    "year": 2024,
+    "kind": "Work",
+    "title": "Inside Tailcall's GraphQL runtime",
+    "summary": "Runtime abstractions, query execution, N+1 analysis, and gRPC reflection.",
+    "paragraphs": [
+      "My work on Tailcall grew from early contributions in 2023 into changes across its GraphQL runtime in 2024. Tailcall brings REST, GraphQL, and gRPC backends behind a GraphQL interface.",
+      "I worked on the TargetRuntime abstraction for different execution environments, gRPC server reflection, and parts of the JIT execution engine. Other contributions included custom GraphQL scalars, configuration generation from Protobuf, and N+1 analysis.",
+      "The WebAssembly work is covered in my hackathon article. Some of the surrounding library fixes are still available as public upstream patches, collected in the related note below."
+    ],
+    "links": [
+      {"label": "My published Tailcall story", "url": "https://blog.ssdd.dev/how-i-won-2k-hackathon-rust"},
+      {"label": "Public project documentation source", "url": "https://github.com/tailcallhq/tailcallhq.github.io"}
+    ],
+    "related": ["tailcall-wasm", "upstream-graphql", "gh-workflow"]
+  },
+  {
+    "slug": "upstream-graphql",
+    "year": 2024,
+    "kind": "Contribution",
+    "title": "Fixing the libraries underneath a GraphQL runtime",
+    "summary": "Merged patches in async-graphql and serde_json_borrow.",
+    "paragraphs": [
+      "In 2024 I contributed fixes to libraries used in GraphQL and JSON processing. These were small, focused upstream patches rather than separate products.",
+      "In async-graphql, I fixed missing default argument values in dynamic-schema resolvers, allowed null request extensions to deserialize, and changed response serialization to omit default data rather than emitting null.",
+      "In serde_json_borrow, I added a conversion from a borrowed serde_json::Value to the crate's borrowed Value type. Each change is linked below so the scope and implementation are easy to inspect."
+    ],
+    "links": [
+      {"label": "Resolver default values", "url": "https://github.com/async-graphql/async-graphql/pull/1527"},
+      {"label": "Nullable extensions", "url": "https://github.com/async-graphql/async-graphql/pull/1563"},
+      {"label": "Response serialization", "url": "https://github.com/async-graphql/async-graphql/pull/1564"},
+      {"label": "Borrowed JSON conversion", "url": "https://github.com/PSeitz/serde_json_borrow/pull/18"}
+    ],
+    "related": ["tailcall-runtime", "mcp-rust-sdk"]
+  },
+  {
+    "slug": "tailcall-wasm",
+    "year": 2024,
+    "kind": "Writing / contribution",
+    "title": "How I won a $2k Rust hackathon",
+    "summary": "Making Tailcall run on WebAssembly, and the story behind the contribution.",
+    "paragraphs": [
+      "I found Tailcall through Hacktoberfest in 2023. Its WebAssembly hackathon became an opportunity to work on making the runtime usable outside its original native environment.",
+      "My contributions included the initial WASM work, IO abstraction, and JWT support for WASM. The challenge began in 2023 and the work landed in 2024, which is why this entry lives in the 2024 timeline.",
+      "I wrote the longer story in How I Won $2k Hackathon (Rust). The original article is linked below."
+    ],
+    "links": [
+      {"label": "Read the original article", "url": "https://blog.ssdd.dev/how-i-won-2k-hackathon-rust"}
+    ],
+    "related": ["tailcall-runtime", "first-tailcall-contribution"]
+  },
+  {
+    "slug": "first-tailcall-contribution",
+    "year": 2023,
+    "kind": "Contribution",
+    "title": "Getting started with Tailcall",
+    "summary": "Finding a project through Hacktoberfest, then staying to work on its runtime.",
+    "paragraphs": [
+      "I started contributing to Tailcall in 2023 after finding it through Hacktoberfest. It became an opportunity to work on a larger Rust codebase and learn how a GraphQL runtime fits together.",
+      "That was the beginning of a longer stretch of work on the project. In 2024, I went on to work on WebAssembly support, runtime abstractions, gRPC, and query execution."
+    ],
+    "links": [
+      {"label": "The story of getting involved", "url": "https://blog.ssdd.dev/how-i-won-2k-hackathon-rust"}
+    ],
+    "related": ["tailcall-wasm", "tailcall-runtime"]
+  },
+  {
+    "slug": "ufwprofile",
+    "year": 2023,
+    "kind": "Project",
+    "title": "Generating Linux firewall profiles with Rust",
+    "summary": "ufwprofile: a small library for creating and installing UFW application profiles.",
+    "paragraphs": [
+      "I published ufwprofile in 2023. It provides a Rust API for describing an application and its ports, then generating a profile for UFW, the Linux firewall configuration tool.",
+      "The library includes permission checks and installation helpers. Its scope is deliberately narrow: the original implementation assumes the standard /etc/ufw/applications.d location, as documented in the repository."
+    ],
+    "links": [
+      {"label": "Source and usage", "url": "https://github.com/ssddOnTop/rust-ufw-app-profile"},
+      {"label": "Published crate", "url": "https://crates.io/crates/ufwprofile"}
+    ],
+    "related": ["encrypto", "gh-workflow"]
+  },
+  {
+    "slug": "encrypto",
+    "year": 2022,
+    "kind": "Project",
+    "title": "My first published Rust crates",
+    "summary": "Learning about cryptography and library design through the Encrypto projects.",
+    "paragraphs": [
+      "I published my first Rust crate, encrypto_rust, in 2022. It was followed by separate RSA, AES, and SHA-256 helper crates as I explored cryptography and cross-platform library APIs.",
+      "These are early learning projects, not a recommendation to use home-grown cryptography. In 2024 I rewrote the RSA library on top of the existing rsa crate rather than continuing with the original implementation.",
+      "I keep this entry as part of the history: small published libraries were an early way for me to learn Rust, packaging, and the responsibility of maintaining code that other people can install."
+    ],
+    "links": [
+      {"label": "Original encrypto_rust crate", "url": "https://crates.io/crates/encrypto_rust"},
+      {"label": "RSA library source", "url": "https://github.com/zotcrypto/encrypto-rsa-rust"},
+      {"label": "2024 RSA rewrite", "url": "https://github.com/zotcrypto/encrypto-rsa-rust/pull/2"}
+    ],
+    "related": ["ufwprofile", "api-keys-simplified"]
+  }
+]
